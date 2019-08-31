@@ -7,7 +7,7 @@ server.use(express.json());
 const project = [];
 
 server.post("/projects", (req, res) => {
-  const [id, title, task] = req.body;
+  const [id] = req.body;
 
   project.push(id);
 
