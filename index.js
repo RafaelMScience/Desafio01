@@ -5,12 +5,11 @@ const server = express();
 server.use(express.json());
 
 const project = [];
-const task = [];
 
 server.post("/projects", (req, res) => {
-  const { id, title, task } = req.body;
+  const [id, title, task] = req.body;
 
-  project.push(id, title, task);
+  project.push(id);
 
   return res.json(project);
 });
