@@ -5,11 +5,27 @@ const server = express();
 server.use(express.json());
 
 const project = [];
+let cont = 0;
 
-server.post("/projects", (req, res) => {
-  const [id] = req.body;
+function checkExist(req, res, next) {
+  const { id } = project[req.params.id];
 
-  project.push(id);
+  if (project[req.params.id]) {
+    return res.status(400).json({ erro: "id ja existe" });
+  }
+
+  return next();
+}
+
+server.post("/projects", checkExist, (req, res) => {
+  const { id, title } = req.body;
+
+  const project_desc = {
+    id,
+    title,
+    task: []
+  };
+  project.push(project_desc);
 
   return res.json(project);
 });
