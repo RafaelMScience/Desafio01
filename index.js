@@ -10,14 +10,18 @@ let cont = 0;
 function checkExist(req, res, next) {
   const { id } = project[req.params.id];
 
-  if (project[req.params.id]) {
+  if (project[id]) {
     return res.status(400).json({ erro: "id ja existe" });
   }
 
   return next();
 }
 
-server.post("/projects", checkExist, (req, res) => {
+server.get("/projects", (req, res) => {
+  return res.json(project);
+});
+
+server.post("/projects", (req, res) => {
   const { id, title } = req.body;
 
   const project_desc = {
