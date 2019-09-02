@@ -60,7 +60,7 @@ server.post("/projects", (req, res) => {
   return res.json(project);
 });
 
-server.put("/projects/:id", checkExist, checkProjectArray, (req, res, next) => {
+server.put("/projects/:id", checkExist, checkProjectArray, (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
 
@@ -71,7 +71,7 @@ server.put("/projects/:id", checkExist, checkProjectArray, (req, res, next) => {
   return res.json(proj);
 });
 
-server.delete("/projects/:id", checkProjectArray, (req, res, next) => {
+server.delete("/projects/:id", checkProjectArray, (req, res) => {
   const { id } = req.params;
 
   let delproject = project.find(del => del.id == id);
@@ -79,6 +79,18 @@ server.delete("/projects/:id", checkProjectArray, (req, res, next) => {
   project.splice(delproject, 1);
 
   return res.json(project);
+});
+
+//funcao de adicionamento do task
+server.post("/projects/:id/tasks", checkProjectArray, (req, res) => {
+  const { id } = req.params;
+  const { title } = req.body;
+
+  let taskproject = project.find(taskproj => taskproj.id == id);
+
+  taskproject.task.push(title);
+
+  return res.json(taskproject);
 });
 
 server.put("/projects/:id");
