@@ -7,6 +7,15 @@ server.use(express.json());
 const project = [];
 let cont = 0;
 
+//middleware global para contagem das requiscao
+function contador(req, res, next) {
+  cont++;
+  console.log(`contado: ${cont}`);
+  next();
+}
+
+server.use(contador);
+
 //middleware de verificacao de existencia do produto
 function checkExist(req, res, next) {
   const { id } = req.params;
